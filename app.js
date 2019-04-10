@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 const client = require('./client.js');
 const transporter = require('./mailconfig.js');
@@ -26,11 +26,10 @@ function send_Email(keyword,tweet,Email_id){
     });
 }
 
-
 const url = 'mongodb://localhost:27017/twitter';
 
-// support parsing of application/json type post data
-app.use(bodyParser.json());
+// // support parsing of application/json type post data
+// app.use(bodyParser.json());
 
 app.get('/twitter', (req, res) => 
 {
@@ -44,8 +43,6 @@ app.get('/twitter', (req, res) =>
 
     res.send('Tweet Notification Started')
 
-    
-    
     stream.on('data', async function(event) 
     {
         // console.log("Tweeted by " + event.user.name + " ::::>>> " +  "Tweet is :::" + event.text + " ::::>>>");
@@ -65,7 +62,7 @@ app.get('/twitter', (req, res) =>
                 dbo.createCollection("Twitter", function(err, res) {
                   if (err) throw err;
                   console.log("Collection created!");
-                  db.close();
+                //   db.close();
                 });
                 let tweet_Data ={
                     Tweet : data
@@ -95,8 +92,7 @@ app.get('/Findtweet', (req, res) =>
     console.log('tweets counter');
     let keyword = req.query.keyword;
     let data = "";
-    let counter = 0;
-    
+   
     MongoClient.connect(url, async function(err, db)
     {
         if (err) throw err;
